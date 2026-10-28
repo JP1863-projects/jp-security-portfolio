@@ -31,3 +31,8 @@ Use synthetic data or sanitized evidence. Never include employer logs, secrets, 
 ## Selected visual direction
 
 The current draft uses a charcoal base, an original crimson-and-gold dragon illustration, and a warm-paper case-study section. The dragon is an original portfolio asset, not a Kali Linux logo. Website asset: assets/dragon-hero.webp (optimized from the original local PNG).
+
+
+## Learning lab in progress
+
+[JP Purple Range](labs/jp-purple-range/README.md) is a local-only adversary-emulation and detection lab. The first exercise uses OWASP Juice Shop with a localhost-only Docker configuration and synthetic authentication events. This is a learning scaffold, not a claim of a completed client engagement.
