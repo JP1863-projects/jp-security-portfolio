@@ -1,4 +1,4 @@
-# Jonathan Perry - Cybersecurity Portfolio
+# Jonathan Perry — Cybersecurity Portfolio
 
 Initial employer-facing portfolio draft. The hosted Site is private while details and supporting artifacts are reviewed.
 
@@ -31,4 +31,3 @@ Use synthetic data or sanitized evidence. Never include employer logs, secrets, 
 ## Selected visual direction
 
 The current draft uses a charcoal base, an original crimson-and-gold dragon illustration, and a warm-paper case-study section. The dragon is an original portfolio asset, not a Kali Linux logo. Website asset: assets/dragon-hero.webp (optimized from the original local PNG).
-
