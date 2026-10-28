@@ -10,7 +10,7 @@ Senior Security Engineer focused on detection engineering, SIEM, security automa
 - Microsoft Purview and Wiz: resume-reported 56% reduction in enterprise data-exposure risk across AWS and Azure.
 - Python/PowerShell automation: resume-reported $180K+ annual unused-service spend avoided through inventory, auditing, and reporting.
 - Microsoft Graph/PowerShell identity audits and controlled Authenticator updates with dry runs, lockout safeguards, and audit logs.
-- Comtech EF Data: resume-reported 45% improvement in mean time to detect/respond; 50+ risk/architecture assessments across 10+ ITAR-controlled systems; 95% alignment with NIST/ISO 27001-related controls.
+- Network Security: resume-reported 45% improvement in mean time to detect/respond; 50+ risk/architecture assessments across 10+ ITAR-controlled systems; 95% alignment with NIST/ISO 27001-related controls.
 - AI-assisted security engineering using ChatGPT, Claude, and AskBits, with human review and validation before operational use.
 
 Impact figures come from the 2026 resume and should be checked against source records before external publication. The portfolio summarizes outcomes; it does not yet include supporting diagrams, code samples, or sanitized evidence.
