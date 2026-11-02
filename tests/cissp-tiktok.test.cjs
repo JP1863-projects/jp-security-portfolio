@@ -21,6 +21,8 @@ test("CISSP posting requires explicit consent and approved upload permission",()
  assert.doesNotMatch(tik,/\/v2\/post\/publish\/video\/init\//);
  assert.match(tik,/\/v2\/post\/publish\/inbox\/video\/init\//);
  assert.match(client,/tt-consent/);
+ assert.match(client,/Download video for manual TikTok posting/);
+ assert.match(client,/function download\(/);
  assert.match(client,/Preview it/);
  assert.match(client,/review it and choose whether to publish/);
 });
