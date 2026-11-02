@@ -73,7 +73,11 @@
   if(file.size>950000){warning="Backup is too large.";render();return;}
   try{
    const data=JSON.parse(await file.text());
-   if(data.format!=="cissp-study-backup-v1"||!data.progress||!Array.isArray(data.progress.history)||!data.progress.cards||!Array.isArray(data.progress.sessions)||!Array.isArray(data.progress.snapshots))throw Error("Invalid backup format");
+   if(data.format!=="cissp-study-backup-v1"||!data.progress||!Array.isArray(data.progress.history)||!data.progress.cards||typeof data.progress.cards!=="object"||!Array.isArray(data.progress.sessions)||!Array.isArray(data.progress.snapshots))throw Error("Invalid backup format");
+   if(data.progress.history.length>5000||data.progress.sessions.length>200||data.progress.snapshots.length>200||Object.keys(data.progress.cards).length>1000)throw Error("Backup exceeds supported limits");
+   const catalog=new Set([...window.CISSP_BANK.questions,...window.CISSP_LEARNING.extras].map(q=>q.id));
+   if(data.progress.history.some(x=>!x||!catalog.has(x.id)||!Number.isFinite(x.at)||!["A","B","C","D"].includes(x.selected)||typeof x.correct!=="boolean"))throw Error("Backup contains invalid study history");
+   for(const [key,v] of Object.entries(data.progress.cards)){if(!/^(?:D[1-8]-\d+|ADV-[1-8]-[1-4]|ACT-[1-8]-[1-2]|LEAST-[1-8])$/.test(key)||!v||!Number.isFinite(v.dueAt)||!Number.isFinite(v.lastAt))throw Error("Invalid review card");}
    bridge.mergeProgress(data.progress);
    warning="Offline progress imported and merged; existing history was preserved.";render();
    notifyChange();
