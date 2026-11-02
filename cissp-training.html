@@ -64,7 +64,7 @@ function currentQ(){return Q.find(x=>x.id===data.current?.currentId);}
 function renderQuiz(){const s=data.current;if(!s){$("quiz-pane").innerHTML='<div class="empty"><h2>Ready to practice your manager mindset?</h2><button class="btn gold" id="quiz-start">Start adaptive practice</button></div>';$("quiz-start").onclick=()=>start("adaptive");return;}
 if(s.finished){renderComplete();return;}const q=currentQ();if(!q){finish();return;}
 if(s.deadline&&Date.now()>s.deadline){finish();return;}
-const n=s.answered.length+1,done=s.answered.find(a=>a.id===q.id),exam=s.exam,chosen=done?.selected||s.selected;const coach=done&&!exam?explainHTML(q,done):"";
+const n=s.answered.length+1,done=s.answered.find(a=>a.id===q.id),exam=s.exam,chosen=done?.selected||s.selected;const coach=done&&!exam?explainHTML(q,done)+(s.answered.length%25===0&&s.answered.length<s.count?'<div class="coach"><h3>🎯 25-question checkpoint</h3><p>Identify the accountable owner, clarify business impact, and eliminate premature tool choices. Recurring bias: '+esc(LABELS[biasStats()[0]?.key]||"No pattern identified yet")+'.</p></div>':""):"";
 const html='<div class="row between"><span class="pill">'+(exam?"⏱ Mock exam • no feedback":"🧠 Adaptive coaching")+'</span><span class="note" id="timer-label">'+(exam?"Time left: calculating…":"You can learn at your own pace")+'</span></div>'+
 '<div class="row between" style="margin-top:11px"><b>Question '+n+' of '+s.count+'</b><span class="note">'+esc(q.domainName)+' · '+esc(q.difficulty)+' · '+esc(q.type)+'</span></div>'+
 '<div class="progress-track"><div class="progress-bar" style="width:'+Math.round(s.answered.length/s.count*100)+'%"></div></div>'+
