@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "jp-cissp-learning",
+  "main": "../dist/cissp-worker.mjs",
+  "compatibility_date": "2026-11-01",
+  "workers_dev": true,
+  "observability": { "enabled": true },
+  "d1_databases": [
+    {
+      "binding": "CISSP_DB",
+      "database_name": "jp-cissp-study-progress",
+      "database_id": "f0e14ecc-1c82-4174-827c-cdc63dff17d7"
+    }
+  ]
+}
