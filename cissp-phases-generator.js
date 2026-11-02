@@ -43,11 +43,11 @@ for(let domain=0;domain<8;domain++){
    output.push({
     id,domain,domainName:window.CISSP_BANK?.domains?.[domain],type:phase.type,difficulty:phase.difficulty,
     scenario:caseText+". "+phase.context,prompt:phase.prompt,options,answer:"ABCD"[answerIndex],engineerOptionId,
-    bias:securityBias[stage],principle:"The best action depends on the security decision stage, not whether an option merely sounds managerial or technical.",
+    bias:securityBias[stage],principle:actions[stage]+". This decision is appropriate because the scenario establishes stage "+(stage+1)+" of the control lifecycle.",
     engineer_instinct:stage===0?actions[2]:actions[selectedIndices[0]],
     why_instinct_feels_right:"Every option describes a reasonable activity in this scenario, but only one matches what has already happened and the decision that is due.",
     hidden_cissp_keyword:phase.type,
-    what_isc2_is_testing:"Recognize sequencing of risk assessment, accountable selection, authorized implementation, validation and corrective action in the CISSP domain.",
+    what_isc2_is_testing:"Recognize the correct next step for "+caseText.toLowerCase()+", including the boundaries between assessment, owner authorization, implementation, verification and correction.",
     manager_vs_engineer:"Stage "+(stage+1)+" requires: "+actions[stage]+". Another valid-looking step may belong earlier or later.",
     memorization_tip:"Read what is ALREADY DONE. Assess → decide → implement → verify → adjust. Apply the step that comes next.",
     whyCorrectAnswerWins:actions[stage]+". The situation is at stage "+(stage+1)+" of five.",
