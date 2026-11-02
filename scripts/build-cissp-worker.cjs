@@ -15,6 +15,10 @@ const inline={
  "/cissp-training.html":load("cissp-training.html"),
  "/cissp-question-bank.js":load("cissp-question-bank.js"),
  "/cissp-learning-content.js":load("cissp-learning-content.js"),
+ "/cissp-expanded-domains-1-2.js":load("cissp-expanded-domains-1-2.js"),
+ "/cissp-expanded-domains-3-4.js":load("cissp-expanded-domains-3-4.js"),
+ "/cissp-expanded-domains-5-6.js":load("cissp-expanded-domains-5-6.js"),
+ "/cissp-expanded-domains-7-8.js":load("cissp-expanded-domains-7-8.js"),
  "/cissp-cloud-sync.js":load("cissp-cloud-sync.js")
 };
 const server=load("cloudflare/cissp-sync-worker.js");
