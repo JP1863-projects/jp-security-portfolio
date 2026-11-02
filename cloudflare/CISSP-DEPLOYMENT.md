@@ -43,7 +43,7 @@ The user's study history is not sold or shared by the application; progress resi
 
 1. Confirm `node --test tests/cissp-*.test.cjs` passes and the Worker builds with `node --check`.
 2. Deploy with Wrangler; verify the worker keeps the `CISSP_DB` binding.
-3. In a browser, open the live game and complete a five-question practice. Confirm the 728-variant bank and explanations.
+3. In a browser, open the live game and complete a five-question practice. Confirm the 1,528-variant bank and explanations.
 4. Open Sync; create an account and **save the displayed recovery code**.
 5. In a separate browser/device, restore using that code, confirm historical answers are present.
 6. Make different practice changes on both devices and confirm revision conflicts merge rather than overwrite progress.
@@ -53,6 +53,14 @@ The user's study history is not sold or shared by the application; progress resi
 ## Limits and disclosures
 - Fixed 125-question session is an **unofficial practice simulation**, not the ISC2 CAT algorithm.
 - The readiness percentage appears after 25 answered questions and is a learning heuristic, not an exam pass prediction.
-- The question bank contains 728 variants from 344 distinct scenario families, not 568 calibrated unique items.
+- The question bank contains 1,528 variants from 504 distinct case families, not 568 calibrated unique items.
 - Current exam outline effective April 15, 2024; updated outline effective April 15, 2027. See the official ISC2 exam outline.
 - The production connection from this GitHub account to Cloudflare Pages was previously rejected. Direct Worker deployments are used for this release. Git changes alone do not automatically update the live Worker.
+
+## November 2026: decision-sequence expansion (+800)
+
+The question bank now includes **1,528 playable question items** generated from **504 underlying case families**. The latest expansion contributes 160 new domain-aligned case studies (20 per domain) and five distinct decision-stage questions per case (800 items total). The five stages ask for assessment, risk-treatment choice, approved execution, validation, and correction after a new finding. This supports structured reasoning about what has already been completed.
+
+These 800 items are **not 800 independently calibrated exam questions**; they are related case variations and are explicitly marked original/unreviewed. Do not use performance on related stages as an independent pass-probability estimate. A certified CISSP subject matter expert should validate the decision ordering and distractor plausibility before broad public promotion.
+
+The new question modules are `cissp-phases-domain-1.js` through `cissp-phases-domain-8.js`, assembled by `cissp-phases-generator.js` and tested by `tests/cissp-phases.test.cjs`.
