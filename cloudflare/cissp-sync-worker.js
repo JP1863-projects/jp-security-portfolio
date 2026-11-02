@@ -28,7 +28,7 @@ async function bodyJson(request){
 }
 function cleanRecord(a){
  if(!a||typeof a!=="object"||Array.isArray(a))return null;
- const id=typeof a.id==="string"&&/^(?:D[1-8]-\d+-[1-4]|ADV-[1-8]-[1-4]|LEAST-[1-8])$/.test(a.id)?a.id:null;
+ const id=typeof a.id==="string"&&/^(?:D[1-8]-\d+-[1-4]|ADV-[1-8]-[1-4]|ACT-[1-8]-[1-2]|LEAST-[1-8])$/.test(a.id)?a.id:null;
  if(!id||!Number.isSafeInteger(a.at)||a.at<1600000000000||a.at>Date.now()+86400000||!["A","B","C","D"].includes(a.selected)||!Number.isInteger(a.domain)||a.domain<0||a.domain>7||typeof a.correct!=="boolean")return null;
  return {id,at:a.at,selected:a.selected,domain:a.domain,correct:a.correct,bias:typeof a.bias==="string"&&/^[A-Z_]{3,40}$/.test(a.bias)?a.bias:null,difficulty:["Easy","Medium","Hard"].includes(a.difficulty)?a.difficulty:"Medium",confidence:["low","medium","high"].includes(a.confidence)?a.confidence:"medium"};
 }
@@ -40,7 +40,7 @@ function cleanProgress(progress){
  const snapshots=progress.snapshots.slice(-200).filter(x=>x&&Number.isFinite(x.at)&&Number.isFinite(x.readiness)).map(x=>({at:x.at,readiness:Math.max(0,Math.min(100,x.readiness))}));
  const cards=Object.create(null);
  for(const [key,v] of Object.entries(progress.cards).slice(0,1000)){
-  if(!/^(?:D[1-8]-\d+|ADV-[1-8]-[1-4]|LEAST-[1-8])$/.test(key)||!v||!Number.isFinite(v.dueAt)||!Number.isFinite(v.lastAt))continue;
+  if(!/^(?:D[1-8]-\d+|ADV-[1-8]-[1-4]|ACT-[1-8]-[1-2]|LEAST-[1-8])$/.test(key)||!v||!Number.isFinite(v.dueAt)||!Number.isFinite(v.lastAt))continue;
   cards[key]={dueAt:v.dueAt,lastAt:v.lastAt,repetitions:Math.max(0,Math.min(100,Math.floor(v.repetitions)||0)),lapses:Math.max(0,Math.min(1000,Math.floor(v.lapses)||0)),intervalHours:Math.max(0,Math.min(24*365,Number(v.intervalHours)||0)),lastCorrect:!!v.lastCorrect,confidence:["low","medium","high"].includes(v.confidence)?v.confidence:"medium"};
  }
  const cleaned={history,sessions,snapshots,cards};
