@@ -13,6 +13,7 @@ function preview(){
  if(!v||!video)return;
  if(previewUrl)URL.revokeObjectURL(previewUrl);
  previewUrl=URL.createObjectURL(video);v.src=previewUrl;v.hidden=false;
+ const download=$("tt-download");if(download)download.disabled=false;
  const label=$("tt-file-status");if(label)label.textContent=(video.name||"Study recap")+" · "+Math.round(video.size/1024)+" KB";
 }
 function consentState(){const btn=$("tt-send"),box=$("tt-consent");if(btn)btn.disabled=busy||!video||!box?.checked;}
@@ -27,20 +28,26 @@ function render(){
  h+='<h3>'+safe(profile.displayName||"TikTok learner")+'</h3><p class="note">Connected to your study account. Private progress is saved by the CISSP cloud sync service, not posted to TikTok.</p>';
  h+='<div class="row"><button class="btn small secondary" id="tt-recovery">Create backup recovery code</button><button class="btn small secondary" id="tt-disconnect">Disconnect TikTok</button></div>';
  if(!upload)h+='<p class="note" style="margin-top:15px">TikTok Draft Inbox requires the separate video.upload permission.</p><a href="/api/tiktok/login?mode=draft" class="btn small gold">Enable Draft Inbox</a>';
- else{
- h+='<h3 style="margin-top:18px">Share a study video</h3><p class="note">Create a short, original CISSP progress recap or choose an existing MP4, WebM, or MOV. Preview it first; you decide whether to send it to TikTok.</p>';
+ }
+ h+='<h3 style="margin-top:19px">Create a study video</h3><p class="note">Generate an original eight-second CISSP progress recap or select a prepared MP4, WebM or MOV. You can download the video and publish manually even without TikTok authorization.</p>';
  h+='<div class="row"><button class="btn small gold" id="tt-create">Create 8-second study video</button><label class="btn small secondary" for="tt-file">Choose video</label><input id="tt-file" type="file" accept="video/mp4,video/webm,video/quicktime,.mov" style="position:absolute;width:1px;height:1px;opacity:0"></div>';
  h+='<video id="tt-preview" controls playsinline hidden style="width:100%;max-height:330px;background:#070a12;border-radius:10px;margin:12px 0"></video><p id="tt-file-status" class="note">No video selected.</p>';
- h+='<label style="display:flex;gap:9px;font-size:13px;margin:13px 0;color:#d8dce5"><input type="checkbox" id="tt-consent">I want to send this video to my TikTok Draft Inbox. I will review it and choose whether to publish inside TikTok.</label><button class="btn" id="tt-send" disabled>Send to TikTok Drafts</button>';
- }
- }
+ h+='<button class="btn small secondary" id="tt-download" disabled>Download video for manual TikTok posting</button>';
+ if(connected&&upload)h+='<label style="display:flex;gap:9px;font-size:13px;margin:13px 0;color:#d8dce5"><input type="checkbox" id="tt-consent">I want to send this video to my TikTok Draft Inbox. I will review it and choose whether to publish inside TikTok.</label><button class="btn" id="tt-send" disabled>Send to TikTok Drafts</button>';
+ else h+='<p class="note">Direct draft transfer is available once TikTok Login Kit and video.upload are approved and authorized. Meanwhile, download your video and upload it in the TikTok app.</p>';
  if(msg)h+='<p role="status" class="note" style="color:#f6ce84;margin-top:14px">'+safe(msg)+'</p>';
  h+='</div>';root.innerHTML=h;
  const bind=(id,fn)=>{if($(id))$(id).onclick=fn;};
- bind("tt-recovery",recovery);bind("tt-disconnect",disconnect);bind("tt-create",createVideo);bind("tt-send",send);
+ bind("tt-recovery",recovery);bind("tt-disconnect",disconnect);bind("tt-create",createVideo);bind("tt-send",send);bind("tt-download",download);
  const input=$("tt-file");if(input)input.onchange=()=>{const file=input.files?.[0];if(!file)return;if(file.size>20*1024*1024||!["video/mp4","video/webm","video/quicktime"].includes(file.type)){msg="Use an MP4, WebM or MOV file under 20 MB.";render();return;}video=file;preview();consentState();};
  if($("tt-consent"))$("tt-consent").onchange=consentState;
- if(video&&upload){preview();consentState();}
+ if(video){preview();consentState();}
+}
+function download(){
+ if(!video)return;
+ const uri=URL.createObjectURL(video),a=document.createElement("a");a.href=uri;a.download=video.name||"cissp-study-recap.webm";
+ document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(uri),1500);
+ msg="Video downloaded. Open TikTok and upload it when you are ready.";render();
 }
 async function refresh(){
  try{status=await api("status");profile=await api("me");}
