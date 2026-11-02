@@ -37,11 +37,12 @@ const inline={
  "/cissp-focus-domain-7.js":load("cissp-focus-domain-7.js"),
  "/cissp-focus-domain-8.js":load("cissp-focus-domain-8.js"),
  "/cissp-focus-generator.js":load("cissp-focus-generator.js"),
- "/cissp-cloud-sync.js":load("cissp-cloud-sync.js")
+ "/cissp-cloud-sync.js":load("cissp-cloud-sync.js"),
+ "/cissp-tiktok.js":load("cissp-tiktok.js")
 };
 const server=load("cloudflare/cissp-sync-worker.js");
 if(!server.includes("export default")||!server.includes("CISSP_DB"))throw Error("Worker API source is incomplete");
-const code="const INLINE_FILES="+JSON.stringify(inline)+";\n"+server;
+const code="const INLINE_FILES="+JSON.stringify(inline)+";\n"+server+"\n"+load("cloudflare/cissp-tiktok.js");
 const out=path.join(root,"dist/cissp-worker.mjs");
 fs.mkdirSync(path.dirname(out),{recursive:true});
 fs.writeFileSync(out,code,"utf8");
