@@ -10,11 +10,11 @@ new Function("window",text("cissp-question-bank.js"))(window);
 new Function("window",text("cissp-learning-content.js"))(window);
 const bank=window.CISSP_BANK,learn=window.CISSP_LEARNING;
 const all=[...bank.questions,...learn.extras];
-test("552 question variants with correct answer keys",()=>{
-  assert.equal(all.length,552);
-  assert.equal(new Set(all.map(q=>q.id)).size,552);
-  assert.equal(learn.extras.length,32);
-  assert.equal(new Set(all.map(q=>learn.family(q.id))).size,168);
+test("568 question variants with correct answer keys",()=>{
+  assert.equal(all.length,568);
+  assert.equal(new Set(all.map(q=>q.id)).size,568);
+  assert.equal(learn.extras.length,48);
+  assert.equal(new Set(all.map(q=>learn.family(q.id))).size,184);
   for(const q of all){
     assert.equal(q.options.length,4,q.id);
     assert.equal(q.options.filter(x=>x.id===q.answer).length,1,q.id);
@@ -23,7 +23,7 @@ test("552 question variants with correct answer keys",()=>{
   }
 });
 test("advanced answer positions are balanced",()=>{
- const counts="ABCD".split("").map(x=>learn.extras.filter(q=>q.answer===x).length);
+ const counts="ABCD".split("").map(x=>learn.extras.filter(q=>q.id.startsWith("ADV-")&&q.answer===x).length);
  assert.equal(counts.join(","),"8,8,8,8");
 });
 test("eight domain lessons and eleven bias guides provide actionable context",()=>{
@@ -31,6 +31,12 @@ test("eight domain lessons and eleven bias guides provide actionable context",()
  assert.equal(learn.biases.length,11);
  for(const row of learn.domains)assert.ok(row.length===5&&row.every(v=>v.length>=10));
  for(const row of learn.biases)assert.ok(row.length===5&&row.every(v=>v.length>=9));
+});
+test("authorized technical action can be right after governance is complete",()=>{
+ const technical=learn.extras.filter(q=>q.id.startsWith("ACT-"));
+ assert.equal(technical.length,16);
+ assert.equal(technical.filter(q=>q.engineerOptionId===null).length,16);
+ for(let d=0;d<8;d++)assert.equal(technical.filter(q=>q.domain===d).length,2);
 });
 test("review schedule spaces correct retrieval, resets misses, and identifies due",()=>{
  const at=Date.UTC(2026,10,1);
