@@ -1,0 +1,35 @@
+name: CISSP Learning Game Checks
+on:
+  push:
+    paths:
+      - 'cissp-training.html'
+      - 'cissp-question-bank.js'
+      - 'tests/cissp-bank.test.cjs'
+      - '.github/workflows/cissp-learning-checks.yml'
+  pull_request:
+    paths:
+      - 'cissp-training.html'
+      - 'cissp-question-bank.js'
+      - 'tests/cissp-bank.test.cjs'
+jobs:
+  bank-validation:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check question bank
+        run: node --test tests/cissp-bank.test.cjs
+      - name: Verify inline browser JavaScript parses
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');
+          const html=fs.readFileSync('cissp-training.html','utf8');
+          const code=html.match(/<script>([\s\S]*?)<\/script>/)?.[1];
+          if (!code) throw new Error('Quiz script not found');
+          new Function(code);
+          console.log('CISSP browser JS syntax: valid');
+          NODE
