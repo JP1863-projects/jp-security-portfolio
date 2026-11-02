@@ -84,7 +84,7 @@ function harness(){
  const el=id=>{if(!els.has(id))els.set(id,{id,dataset:{},innerHTML:"",textContent:"",hidden:false,disabled:false,setAttribute(){},addEventListener(ev,fn){this[ev]=fn;}});return els.get(id)};
  views.forEach(v=>el("tab-"+v).dataset.view=v);
  let choices=[],confidence=[],domains=[];
- const modes=["adaptive","quick","25","50","100","125","weak","5","review"].map(mode=>({dataset:{mode},addEventListener(ev,fn){this[ev]=fn;}}));
+ const modes=["adaptive","quick","25","50","100","125","weak","ladder","5","review"].map(mode=>({dataset:{mode},addEventListener(ev,fn){this[ev]=fn;}}));
  const document={getElementById:el,querySelectorAll(s){
   if(s===".view")return views.map(el);
   if(s===".tab")return views.map(v=>el("tab-"+v));
@@ -139,4 +139,19 @@ test("125-question mock balances blueprint with unique scenario families and sto
  assert.equal(h.state().history.length,125);
  assert.equal(Object.keys(h.state().cards).length,125);
  assert.equal(byDomain.join(","),"20,13,16,16,16,15,16,13");
+});
+
+test("Decision Ladder mode chooses 20 unique new case families",()=>{
+ const h=harness();h.mode("ladder");
+ const families=new Set();
+ for(let i=0;i<20;i++){
+  const q=h.answer(true);
+  assert.ok(q.id.startsWith("SEQ-"),q.id);
+  const family=learn.family(q.id);
+  assert.ok(!families.has(family),family);
+  families.add(family);
+  h.el("answer-btn").onclick();
+ }
+ assert.ok(h.state().current.finished);
+ assert.equal(h.state().history.length,20);
 });
