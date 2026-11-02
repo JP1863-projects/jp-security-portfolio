@@ -7,7 +7,7 @@
  */
 const SYNC_COOKIE="__Host-cissp_session";
 const SESSION_DURATION=30*24*60*60*1000;
-const MAX_PROGRESS_BYTES=280000;
+const MAX_PROGRESS_BYTES=900000;
 const SESSION_RE=/^[A-Za-z0-9_-]{43}$/;
 const CODE_RE=/^CISSP1\.([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\.([A-Za-z0-9_-]{43})$/;
 function randomSecret(){const b=new Uint8Array(32);crypto.getRandomValues(b);return btoa(String.fromCharCode(...b)).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");}
