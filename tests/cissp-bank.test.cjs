@@ -20,7 +20,7 @@ test("complete bank has 8 domains, 128 cores, and 520 playable variants", () => 
 test("all answer keys are valid with distinct choices", () => {
   for (const q of bank.questions) {
     assert.equal(q.options.length, 4, q.id);
-    assert.deepEqual(q.options.map(o => o.id).sort(), ["A", "B", "C", "D"], q.id);
+    assert.deepEqual(Array.from(q.options, o => o.id).sort(), ["A", "B", "C", "D"], q.id);
     assert.equal(new Set(q.options.map(o => o.text)).size, 4, q.id);
     assert.equal(q.options.filter(o => o.id === q.answer).length, 1, q.id);
   }
