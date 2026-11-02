@@ -5,8 +5,8 @@ This is an editorial and programmatic review of **original practice questions**,
 
 ## Coverage
 - 8 domains with 2024 weights: 16%, 10%, 13%, 13%, 13%, 12%, 13%, 10%
-- 728 question variants
-- 344 distinct scenario families: 128 original core + 8 LEAST cases + 32 advanced decision cases + 16 approved-technical-execution cases + 160 new domain-focused scenarios
+- 1,528 question variants
+- 504 distinct case families: 128 original core + 8 LEAST cases + 32 advanced decision cases + 16 approved-technical-execution cases + 160 new domain-focused scenarios
 - Core scenario families appear in four organization settings. Treat these as variants, not independently calibrated items.
 - Six prompt keywords: BEST, MOST, FIRST, NEXT, PRIMARY, LEAST
 - 11 tracked mindset patterns. A bias is recorded only if the learner selects the identified trap; other wrong choices are not automatically counted as engineering bias.
@@ -44,7 +44,7 @@ Readiness is a custom learning heuristic, not an ISC2 scaled score, CAT algorith
 
 ## November 2026 — expansion review
 
-Added 160 original, domain-specific scenarios (20 per domain), bringing the bank to 728 variants and 344 distinct scenario families. These are marked original/unreviewed and must receive expert review before they are described as calibrated certification-exam items.
+Added 160 original, domain-specific scenarios (20 per domain), bringing the bank to 1,528 variants and 504 distinct case families. These are marked original/unreviewed and must receive expert review before they are described as calibrated certification-exam items.
 
 The expansion adds topics including cryptography, secure boot, network protocols, identity federation, object authorization, third-party assurance, digital forensics, incident recovery, and secure software supply chains. New answer keys have a balanced A/B/C/D distribution (40 each). All new scenario stems are distinct by exact text; this does not guarantee psychometric independence.
 
@@ -54,3 +54,11 @@ The expansion adds topics including cryptography, secure boot, network protocols
 - Short domain micro-lessons before repeated errors.
 - A daily sequence: due review → 10 fresh domain-targeted scenarios → explain the strongest distractor.
 - A hard stop on unsupported "pass prediction" claims, because official exam items and scoring are not available.
+
+## November 2026: decision-sequence expansion (+800)
+
+The question bank now includes **1,528 playable question items** generated from **504 underlying case families**. The latest expansion contributes 160 new domain-aligned case studies (20 per domain) and five distinct decision-stage questions per case (800 items total). The five stages ask for assessment, risk-treatment choice, approved execution, validation, and correction after a new finding. This supports structured reasoning about what has already been completed.
+
+These 800 items are **not 800 independently calibrated exam questions**; they are related case variations and are explicitly marked original/unreviewed. Do not use performance on related stages as an independent pass-probability estimate. A certified CISSP subject matter expert should validate the decision ordering and distractor plausibility before broad public promotion.
+
+The new question modules are `cissp-phases-domain-1.js` through `cissp-phases-domain-8.js`, assembled by `cissp-phases-generator.js` and tested by `tests/cissp-phases.test.cjs`.
