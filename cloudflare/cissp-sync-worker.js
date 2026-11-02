@@ -126,12 +126,12 @@ async function staticPage(request){
    headers["Content-Type"]=p.endsWith(".js")?"application/javascript; charset=utf-8":"text/html; charset=utf-8";
    return new Response(request.method==="HEAD"?null:INLINE_FILES[p],{headers});
  }
- if(!(/^\/(?:assets\/[a-zA-Z0-9_./-]+|[a-zA-Z0-9_-]+\.html|favicon\.ico)$/.test(p))||p.includes(".."))return new Response("Not found",{status:404});
+ if(!(/^\/(?:assets\/[a-zA-Z0-9_./-]+|cissp-[a-zA-Z0-9_-]+\.js|[a-zA-Z0-9_-]+\.html|favicon\.ico)$/.test(p))||p.includes(".."))return new Response("Not found",{status:404});
  try{
-   const r=await fetch("https://raw.githubusercontent.com/JP1863-projects/jp-security-portfolio/main"+p,{cf:{cacheTtl:1800,cacheEverything:true}});
+   const r=await fetch("https://raw.githubusercontent.com/JP1863-projects/jp-security-portfolio/main"+p,{cf:{cacheTtl:120,cacheEverything:true}});
    if(!r.ok)return new Response("Not found",{status:404});
-   const t=p.endsWith(".webp")?"image/webp":p.endsWith(".png")?"image/png":p.endsWith(".jpg")?"image/jpeg":p.endsWith(".svg")?"image/svg+xml":p.endsWith(".html")?"text/html; charset=utf-8":"application/octet-stream";
-   return new Response(request.method==="HEAD"?null:r.body,{status:200,headers:{"Content-Type":t,"Cache-Control":"public,max-age=1800","X-Content-Type-Options":"nosniff"}});
+   const t=p.endsWith(".webp")?"image/webp":p.endsWith(".png")?"image/png":p.endsWith(".jpg")?"image/jpeg":p.endsWith(".svg")?"image/svg+xml":p.endsWith(".html")?"text/html; charset=utf-8":p.endsWith(".js")?"application/javascript; charset=utf-8":"application/octet-stream";
+   return new Response(request.method==="HEAD"?null:r.body,{status:200,headers:{"Content-Type":t,"Cache-Control":"public,max-age=120","X-Content-Type-Options":"nosniff"}});
  }catch{return new Response("Asset temporarily unavailable",{status:502});}
 }
 export default {
