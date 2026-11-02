@@ -12,13 +12,22 @@ new Function("window",text("cissp-expanded-domains-1-2.js"))(window);
 new Function("window",text("cissp-expanded-domains-3-4.js"))(window);
 new Function("window",text("cissp-expanded-domains-5-6.js"))(window);
 new Function("window",text("cissp-expanded-domains-7-8.js"))(window);
+new Function("window",text("cissp-phases-domain-1.js"))(window);
+new Function("window",text("cissp-phases-domain-2.js"))(window);
+new Function("window",text("cissp-phases-domain-3.js"))(window);
+new Function("window",text("cissp-phases-domain-4.js"))(window);
+new Function("window",text("cissp-phases-domain-5.js"))(window);
+new Function("window",text("cissp-phases-domain-6.js"))(window);
+new Function("window",text("cissp-phases-domain-7.js"))(window);
+new Function("window",text("cissp-phases-domain-8.js"))(window);
+new Function("window",text("cissp-phases-generator.js"))(window);
 const bank=window.CISSP_BANK,learn=window.CISSP_LEARNING;
-const all=[...bank.questions,...learn.extras,...window.CISSP_MORE];
-test("728 question variants with correct answer keys",()=>{
-  assert.equal(all.length,728);
-  assert.equal(new Set(all.map(q=>q.id)).size,728);
+const all=[...bank.questions,...learn.extras,...window.CISSP_MORE,...window.CISSP_PHASE_QUESTIONS];
+test("1528 question variants with correct answer keys",()=>{
+  assert.equal(all.length,1528);
+  assert.equal(new Set(all.map(q=>q.id)).size,1528);
   assert.equal(learn.extras.length,48);
-  assert.equal(new Set(all.map(q=>learn.family(q.id))).size,344);
+  assert.equal(new Set(all.map(q=>learn.family(q.id))).size,504);
   for(const q of all){
     assert.equal(q.options.length,4,q.id);
     assert.equal(q.options.filter(x=>x.id===q.answer).length,1,q.id);
