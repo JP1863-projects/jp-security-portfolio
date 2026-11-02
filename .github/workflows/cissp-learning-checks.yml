@@ -16,6 +16,16 @@ on:
       - 'cissp-phases-domain-7.js'
       - 'cissp-phases-domain-8.js'
       - 'cissp-phases-generator.js'
+      - 'cissp-focus-domain-1.js'
+      - 'cissp-focus-domain-2.js'
+      - 'cissp-focus-domain-3.js'
+      - 'cissp-focus-domain-4.js'
+      - 'cissp-focus-domain-5.js'
+      - 'cissp-focus-domain-6.js'
+      - 'cissp-focus-domain-7.js'
+      - 'cissp-focus-domain-8.js'
+      - 'cissp-focus-generator.js'
+      - 'tests/cissp-focus.test.cjs'
       - 'tests/cissp-phases.test.cjs'
       - 'cissp-expanded-domains-7-8.js'
       - 'cissp-expanded-domains-5-6.js'
@@ -45,6 +55,16 @@ on:
       - 'cissp-phases-domain-7.js'
       - 'cissp-phases-domain-8.js'
       - 'cissp-phases-generator.js'
+      - 'cissp-focus-domain-1.js'
+      - 'cissp-focus-domain-2.js'
+      - 'cissp-focus-domain-3.js'
+      - 'cissp-focus-domain-4.js'
+      - 'cissp-focus-domain-5.js'
+      - 'cissp-focus-domain-6.js'
+      - 'cissp-focus-domain-7.js'
+      - 'cissp-focus-domain-8.js'
+      - 'cissp-focus-generator.js'
+      - 'tests/cissp-focus.test.cjs'
       - 'tests/cissp-phases.test.cjs'
       - 'cissp-expanded-domains-7-8.js'
       - 'cissp-expanded-domains-5-6.js'
@@ -68,7 +88,7 @@ jobs:
         with:
           node-version: '22'
       - name: Check question bank
-        run: node --test tests/cissp-bank.test.cjs tests/cissp-learning.test.cjs tests/cissp-cloud.test.cjs tests/cissp-editorial.test.cjs tests/cissp-phases.test.cjs
+        run: node --test tests/cissp-bank.test.cjs tests/cissp-learning.test.cjs tests/cissp-cloud.test.cjs tests/cissp-editorial.test.cjs tests/cissp-phases.test.cjs tests/cissp-focus.test.cjs
       - name: Build deployable Worker
         run: |
           node scripts/build-cissp-worker.cjs
