@@ -7,6 +7,7 @@ on:
       - 'cissp-learning-content.js'
       - 'tests/cissp-bank.test.cjs'
       - 'tests/cissp-learning.test.cjs'
+      - 'tests/cissp-editorial.test.cjs'
       - 'tests/cissp-cloud.test.cjs'
       - 'cloudflare/cissp-study-schema.sql'
       - 'cloudflare/cissp-sync-worker.js'
@@ -19,6 +20,7 @@ on:
       - 'cissp-learning-content.js'
       - 'tests/cissp-bank.test.cjs'
       - 'tests/cissp-learning.test.cjs'
+      - 'tests/cissp-editorial.test.cjs'
       - 'tests/cissp-cloud.test.cjs'
       - 'cloudflare/cissp-study-schema.sql'
       - 'cloudflare/cissp-sync-worker.js'
@@ -34,7 +36,7 @@ jobs:
         with:
           node-version: '22'
       - name: Check question bank
-        run: node --test tests/cissp-bank.test.cjs tests/cissp-learning.test.cjs tests/cissp-cloud.test.cjs
+        run: node --test tests/cissp-bank.test.cjs tests/cissp-learning.test.cjs tests/cissp-cloud.test.cjs tests/cissp-editorial.test.cjs
       - name: Verify inline browser JavaScript parses
         run: |
           node - <<'NODE'
