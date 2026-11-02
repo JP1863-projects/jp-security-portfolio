@@ -17,7 +17,7 @@ const optionLabels=["A","B","C","D"], options=shuffled([s[1],s[2],s[3],s[4]],id)
 const answer=options.find(o=>o.text===s[1]).id;
 all.push({id,domain,domainName:domains[domain],type,difficulty:["Easy","Medium","Hard"][(index+variant)%3],
 scenario:"At a "+org+", "+s[0]+".",prompt:{BEST:"What is the BEST response?",MOST:"What is the MOST appropriate management decision?",FIRST:"What should the security leader do FIRST?",NEXT:"What is the NEXT most appropriate step?",PRIMARY:"What is the PRIMARY management consideration?"}[type],
-options,answer,bias:s[6],principle:s[5],
+options,answer,bias:s[6],engineerOptionId:options.find(o=>o.text===s[2]).id,principle:s[5],
 engineer_instinct:s[2],why_instinct_feels_right:"It offers a direct technical action, but may bypass the accountable owner, business context, or response sequence.",
 hidden_cissp_keyword:({FIRST:"FIRST",MOST:"MOST appropriate",BEST:"BEST",NEXT:"NEXT",PRIMARY:"PRIMARY"})[type],
 what_isc2_is_testing:"Select the action best aligned with organizational risk, authority, policy and appropriate sequencing.",
@@ -29,7 +29,7 @@ industry:org,environment:["Hybrid","Cloud","On premises"][variant%3]});
 })));
 least.forEach((s,i)=>{
 const domain=i, id="LEAST-"+(i+1), options=shuffled([s[1],s[2],s[3],s[4]],id).map((text,j)=>({id:"ABCD"[j],text}));
-all.push({id,domain,domainName:domains[domain],type:"LEAST",difficulty:"Hard",scenario:"At an enterprise, "+s[0]+".",prompt:"Which is the LEAST appropriate action?",options,answer:options.find(x=>x.text===s[1]).id,bias:s[6],principle:s[5],engineer_instinct:s[1],why_instinct_feels_right:"It sounds decisive, but it bypasses an essential risk-management principle.",hidden_cissp_keyword:"LEAST",what_isc2_is_testing:"Identify the action that most clearly violates sound security governance.",manager_vs_engineer:"An accountable security leader avoids: "+s[1],memorization_tip:s[5],framework:"Risk management",threat:"poor governance",industry:"Enterprise",environment:"Hybrid"});
+all.push({id,domain,domainName:domains[domain],type:"LEAST",difficulty:"Hard",scenario:"At an enterprise, "+s[0]+".",prompt:"Which is the LEAST appropriate action?",options,answer:options.find(x=>x.text===s[1]).id,bias:s[6],engineerOptionId:null,principle:s[5],engineer_instinct:s[1],why_instinct_feels_right:"It sounds decisive, but it bypasses an essential risk-management principle.",hidden_cissp_keyword:"LEAST",what_isc2_is_testing:"Identify the action that most clearly violates sound security governance.",manager_vs_engineer:"An accountable security leader avoids: "+s[1],memorization_tip:s[5],framework:"Risk management",threat:"poor governance",industry:"Enterprise",environment:"Hybrid"});
 });
 return Object.freeze({domains,weights,patterns,questions:Object.freeze(all)});
 })();
