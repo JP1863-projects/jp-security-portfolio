@@ -3,6 +3,10 @@ on:
   push:
     paths:
       - 'cissp-training.html'
+      - 'cissp-tiktok.js'
+      - 'cloudflare/cissp-tiktok.js'
+      - 'tests/cissp-tiktok.test.cjs'
+      - 'cloudflare/cissp-study-schema.sql'
       - 'scripts/build-cissp-worker.cjs'
       - 'cloudflare/cissp.wrangler.jsonc'
       - 'cissp-question-bank.js'
@@ -42,6 +46,10 @@ on:
   pull_request:
     paths:
       - 'cissp-training.html'
+      - 'cissp-tiktok.js'
+      - 'cloudflare/cissp-tiktok.js'
+      - 'tests/cissp-tiktok.test.cjs'
+      - 'cloudflare/cissp-study-schema.sql'
       - 'scripts/build-cissp-worker.cjs'
       - 'cloudflare/cissp.wrangler.jsonc'
       - 'cissp-question-bank.js'
@@ -88,7 +96,7 @@ jobs:
         with:
           node-version: '22'
       - name: Check question bank
-        run: node --test tests/cissp-bank.test.cjs tests/cissp-learning.test.cjs tests/cissp-cloud.test.cjs tests/cissp-editorial.test.cjs tests/cissp-phases.test.cjs tests/cissp-focus.test.cjs
+        run: node --test tests/cissp-bank.test.cjs tests/cissp-learning.test.cjs tests/cissp-cloud.test.cjs tests/cissp-editorial.test.cjs tests/cissp-phases.test.cjs tests/cissp-focus.test.cjs tests/cissp-tiktok.test.cjs
       - name: Build deployable Worker
         run: |
           node scripts/build-cissp-worker.cjs
