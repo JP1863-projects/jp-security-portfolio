@@ -21,13 +21,22 @@ new Function("window",text("cissp-phases-domain-6.js"))(window);
 new Function("window",text("cissp-phases-domain-7.js"))(window);
 new Function("window",text("cissp-phases-domain-8.js"))(window);
 new Function("window",text("cissp-phases-generator.js"))(window);
+new Function("window",text("cissp-focus-domain-1.js"))(window);
+new Function("window",text("cissp-focus-domain-2.js"))(window);
+new Function("window",text("cissp-focus-domain-3.js"))(window);
+new Function("window",text("cissp-focus-domain-4.js"))(window);
+new Function("window",text("cissp-focus-domain-5.js"))(window);
+new Function("window",text("cissp-focus-domain-6.js"))(window);
+new Function("window",text("cissp-focus-domain-7.js"))(window);
+new Function("window",text("cissp-focus-domain-8.js"))(window);
+new Function("window",text("cissp-focus-generator.js"))(window);
 const bank=window.CISSP_BANK,learn=window.CISSP_LEARNING;
-const all=[...bank.questions,...learn.extras,...window.CISSP_MORE,...window.CISSP_PHASE_QUESTIONS];
-test("1528 question variants with correct answer keys",()=>{
-  assert.equal(all.length,1528);
-  assert.equal(new Set(all.map(q=>q.id)).size,1528);
+const all=[...bank.questions,...learn.extras,...window.CISSP_MORE,...window.CISSP_PHASE_QUESTIONS,...window.CISSP_FOCUS_QUESTIONS];
+test("2028 question variants with correct answer keys",()=>{
+  assert.equal(all.length,2028);
+  assert.equal(new Set(all.map(q=>q.id)).size,2028);
   assert.equal(learn.extras.length,48);
-  assert.equal(new Set(all.map(q=>learn.family(q.id))).size,504);
+  assert.equal(new Set(all.map(q=>learn.family(q.id))).size,604);
   for(const q of all){
     assert.equal(q.options.length,4,q.id);
     assert.equal(q.options.filter(x=>x.id===q.answer).length,1,q.id);
@@ -84,7 +93,7 @@ function harness(){
  const el=id=>{if(!els.has(id))els.set(id,{id,dataset:{},innerHTML:"",textContent:"",hidden:false,disabled:false,setAttribute(){},addEventListener(ev,fn){this[ev]=fn;}});return els.get(id)};
  views.forEach(v=>el("tab-"+v).dataset.view=v);
  let choices=[],confidence=[],domains=[];
- const modes=["adaptive","quick","25","50","100","125","weak","ladder","5","review"].map(mode=>({dataset:{mode},addEventListener(ev,fn){this[ev]=fn;}}));
+ const modes=["adaptive","quick","25","50","100","125","weak","ladder","focus","5","review"].map(mode=>({dataset:{mode},addEventListener(ev,fn){this[ev]=fn;}}));
  const document={getElementById:el,querySelectorAll(s){
   if(s===".view")return views.map(el);
   if(s===".tab")return views.map(v=>el("tab-"+v));
