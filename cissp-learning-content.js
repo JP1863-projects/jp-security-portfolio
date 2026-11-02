@@ -11,7 +11,7 @@ const extras=[...extrasRaw,...authorizedActions].map(q=>{
  const options=ordered.map((o,i)=>({id:"ABCD"[i],text:o.text}));
  return {...q,options,answer:options.find(o=>o.text===q.options.find(z=>z.id===q.answer).text).id,engineerOptionId:q.engineerOptionId?options.find(o=>o.text===q.options.find(z=>z.id===q.engineerOptionId).text).id:null};
 });
-function family(id){return id.startsWith("ADV-")||id.startsWith("ACT-")||id.startsWith("LEAST-")?id:id.replace(/-\d+$/,"");}
+function family(id){return id.startsWith("ADV-")||id.startsWith("ACT-")||id.startsWith("NEW-")||id.startsWith("LEAST-")?id:id.replace(/-\d+$/,"");}
 const HOUR=3600000,DAY=24*HOUR;
 function schedule(prev,correct,confidence,now=Date.now()){
  const old=prev&&typeof prev==="object"?prev:{};
