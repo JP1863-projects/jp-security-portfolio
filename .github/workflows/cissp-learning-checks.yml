@@ -3,6 +3,8 @@ on:
   push:
     paths:
       - 'cissp-training.html'
+      - 'scripts/build-cissp-worker.cjs'
+      - 'cloudflare/cissp.wrangler.jsonc'
       - 'cissp-question-bank.js'
       - 'cissp-learning-content.js'
       - 'tests/cissp-bank.test.cjs'
@@ -16,6 +18,8 @@ on:
   pull_request:
     paths:
       - 'cissp-training.html'
+      - 'scripts/build-cissp-worker.cjs'
+      - 'cloudflare/cissp.wrangler.jsonc'
       - 'cissp-question-bank.js'
       - 'cissp-learning-content.js'
       - 'tests/cissp-bank.test.cjs'
@@ -37,6 +41,10 @@ jobs:
           node-version: '22'
       - name: Check question bank
         run: node --test tests/cissp-bank.test.cjs tests/cissp-learning.test.cjs tests/cissp-cloud.test.cjs tests/cissp-editorial.test.cjs
+      - name: Build deployable Worker
+        run: |
+          node scripts/build-cissp-worker.cjs
+          node --check dist/cissp-worker.mjs
       - name: Verify inline browser JavaScript parses
         run: |
           node - <<'NODE'
