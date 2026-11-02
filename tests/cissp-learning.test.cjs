@@ -8,19 +8,32 @@ const text=name=>fs.readFileSync(path.join(root,name),"utf8");
 const window={scrollTo(){}};
 new Function("window",text("cissp-question-bank.js"))(window);
 new Function("window",text("cissp-learning-content.js"))(window);
+new Function("window",text("cissp-expanded-domains-1-2.js"))(window);
+new Function("window",text("cissp-expanded-domains-3-4.js"))(window);
+new Function("window",text("cissp-expanded-domains-5-6.js"))(window);
+new Function("window",text("cissp-expanded-domains-7-8.js"))(window);
 const bank=window.CISSP_BANK,learn=window.CISSP_LEARNING;
-const all=[...bank.questions,...learn.extras];
-test("568 question variants with correct answer keys",()=>{
-  assert.equal(all.length,568);
-  assert.equal(new Set(all.map(q=>q.id)).size,568);
+const all=[...bank.questions,...learn.extras,...window.CISSP_MORE];
+test("728 question variants with correct answer keys",()=>{
+  assert.equal(all.length,728);
+  assert.equal(new Set(all.map(q=>q.id)).size,728);
   assert.equal(learn.extras.length,48);
-  assert.equal(new Set(all.map(q=>learn.family(q.id))).size,184);
+  assert.equal(new Set(all.map(q=>learn.family(q.id))).size,344);
   for(const q of all){
     assert.equal(q.options.length,4,q.id);
     assert.equal(q.options.filter(x=>x.id===q.answer).length,1,q.id);
     assert.equal(new Set(q.options.map(x=>x.text)).size,4,q.id);
     if(q.engineerOptionId)assert.notEqual(q.answer,q.engineerOptionId,q.id);
   }
+});
+test("160 new distinct questions span each domain equally with balanced answer keys",()=>{
+ const newQuestions=window.CISSP_MORE;
+ assert.equal(newQuestions.length,160);
+ for(let domain=0;domain<8;domain++)assert.equal(newQuestions.filter(q=>q.domain===domain).length,20);
+ assert.equal(new Set(newQuestions.map(q=>q.scenario)).size,160);
+ assert.equal(new Set(newQuestions.map(q=>q.id)).size,160);
+ for(const letter of "ABCD")assert.equal(newQuestions.filter(q=>q.answer===letter).length,40);
+ for(const q of newQuestions)assert.notEqual(q.answer,q.engineerOptionId,q.id);
 });
 test("advanced answer positions are balanced",()=>{
  const counts="ABCD".split("").map(x=>learn.extras.filter(q=>q.id.startsWith("ADV-")&&q.answer===x).length);
