@@ -139,6 +139,7 @@ export default {
    try{
     const u=new URL(request.url);
     if(u.pathname.startsWith("/api/study/"))return await api(request,env.CISSP_DB);
+    if(u.pathname.startsWith("/api/tiktok/"))return await tikTokRoute(request,env);
     return await staticPage(request);
    }catch{return new Response("Service temporarily unavailable",{status:503});}
  }
