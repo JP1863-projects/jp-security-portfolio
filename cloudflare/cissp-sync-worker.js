@@ -73,7 +73,7 @@ async function api(request,db){
      const hash=await digest(recoveryCode);
      await db.prepare("INSERT INTO study_accounts(id,recovery_hash,progress_json,revision) VALUES (?,?,?,0)").bind(id,hash,'{"history":[],"sessions":[],"snapshots":[],"cards":{}}').run();
      const token=await newSession(db,id);
-     return json({accountId:id,recoveryCode,revision:0},{valueOf(){return 201;}}.valueOf(),{"Set-Cookie":sessionCookie(token)});
+     return json({accountId:id,recoveryCode,revision:0},201,{"Set-Cookie":sessionCookie(token)});
    }
    if(path==="/api/study/restore"){
      const payload=await bodyJson(request);
