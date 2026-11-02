@@ -110,12 +110,16 @@ async function tikTokRoute(request,env){
   if(!ttMutation(request))return ttJson({error:"Origin or content type rejected"},403);
   if(!signed.link||!ttScope(signed.link.scope,"video.upload"))return ttJson({error:"Approve video.upload through TikTok to send draft videos."},403);
   let payload;try{payload=await bodyJson(request);}catch{return ttJson({error:"Invalid request body"},400);}
+  const last=await db.prepare("SELECT created_at FROM tiktok_upload_events WHERE account_id=? AND created_at>? LIMIT 1").bind(signed.session.id,Date.now()-120000).first();
+  if(last)return ttJson({error:"A draft upload was recently started. Wait two minutes before sending another."},429);
   const size=Number(payload.fileSize),mime=String(payload.mime||"");
   if(!Number.isSafeInteger(size)||size<1000||size>TT_VIDEO_MAX||!["video/mp4","video/webm","video/quicktime"].includes(mime)||payload.consent!==true)return ttJson({error:"A confirmed MP4, WebM or MOV video up to 20MB is required."},400);
   try{
    const token=await ttFreshToken(env,db,signed.link);
    const result=await ttTikTokPost(token,"/v2/post/publish/inbox/video/init/",{source_info:{source:"FILE_UPLOAD",video_size:size,chunk_size:size,total_chunk_count:1}});
    if(!result?.upload_url||!result.publish_id||!ttUploadHost(result.upload_url))return ttJson({error:"TikTok upload URL invalid"},502);
+   await db.prepare("INSERT INTO tiktok_upload_events(id,account_id,publish_id,created_at,status) VALUES (?,?,?,?,?)")
+   .bind(crypto.randomUUID(),signed.session.id,result.publish_id,Date.now(),"initialized").run();
    const ticket=await ttSeal(env,JSON.stringify({accountId:signed.session.id,uploadUrl:result.upload_url,size,mime,publishId:result.publish_id,expiresAt:Date.now()+10*60*1000}));
    return ttJson({ticket,publishId:result.publish_id,ready:true});
   }catch(e){return ttJson({error:String(e.message).slice(0,120)},502);}
@@ -131,7 +135,7 @@ async function tikTokRoute(request,env){
   try{
    const upload=await fetch(info.uploadUrl,{method:"PUT",headers:{"Content-Type":info.mime,"Content-Range":"bytes 0-"+(info.size-1)+"/"+info.size,"Content-Length":String(info.size)},body:bytes,redirect:"manual"});
    if(![200,201,206].includes(upload.status))return ttJson({error:"TikTok did not accept the video file ("+upload.status+")."},502);
-   await db.prepare("INSERT INTO tiktok_upload_events(id,account_id,publish_id,created_at,status) VALUES (?,?,?,?,?)").bind(crypto.randomUUID(),signed.session.id,info.publishId,Date.now(),"draft_uploaded").run();
+   await db.prepare("UPDATE tiktok_upload_events SET status=? WHERE account_id=? AND publish_id=?").bind("draft_uploaded",signed.session.id,info.publishId).run();
    return ttJson({sent:true,publishId:info.publishId,nextStep:"Open TikTok inbox notifications to review, edit and publish the draft."});
   }catch{return ttJson({error:"TikTok media transfer failed. Retry with a newly generated upload."},502);}
  }
