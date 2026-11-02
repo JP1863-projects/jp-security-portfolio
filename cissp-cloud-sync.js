@@ -70,7 +70,7 @@
  }
  async function importBackup(event){
   const file=event.target.files?.[0];if(!file)return;
-  if(file.size>350000){warning="Backup is too large.";render();return;}
+  if(file.size>950000){warning="Backup is too large.";render();return;}
   try{
    const data=JSON.parse(await file.text());
    if(data.format!=="cissp-study-backup-v1"||!data.progress||!Array.isArray(data.progress.history)||!data.progress.cards||!Array.isArray(data.progress.sessions)||!Array.isArray(data.progress.snapshots))throw Error("Invalid backup format");
