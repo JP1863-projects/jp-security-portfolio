@@ -19,6 +19,15 @@ const inline={
  "/cissp-expanded-domains-3-4.js":load("cissp-expanded-domains-3-4.js"),
  "/cissp-expanded-domains-5-6.js":load("cissp-expanded-domains-5-6.js"),
  "/cissp-expanded-domains-7-8.js":load("cissp-expanded-domains-7-8.js"),
+ "/cissp-phases-domain-1.js":load("cissp-phases-domain-1.js"),
+ "/cissp-phases-domain-2.js":load("cissp-phases-domain-2.js"),
+ "/cissp-phases-domain-3.js":load("cissp-phases-domain-3.js"),
+ "/cissp-phases-domain-4.js":load("cissp-phases-domain-4.js"),
+ "/cissp-phases-domain-5.js":load("cissp-phases-domain-5.js"),
+ "/cissp-phases-domain-6.js":load("cissp-phases-domain-6.js"),
+ "/cissp-phases-domain-7.js":load("cissp-phases-domain-7.js"),
+ "/cissp-phases-domain-8.js":load("cissp-phases-domain-8.js"),
+ "/cissp-phases-generator.js":load("cissp-phases-generator.js"),
  "/cissp-cloud-sync.js":load("cissp-cloud-sync.js")
 };
 const server=load("cloudflare/cissp-sync-worker.js");
