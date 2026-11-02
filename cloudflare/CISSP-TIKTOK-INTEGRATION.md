@@ -50,3 +50,7 @@ For current permissions and upload requirements consult:
 - https://developers.tiktok.com/docs/en/login-kit-web
 - https://developers.tiktok.com/docs/en/content-posting-api-get-started-upload-content
 - https://developers.tiktok.com/docs/en/content-posting-api-media-transfer-guide
+
+## Unapproved TikTok apps: immediate video-sharing fallback
+
+The Sync tab now offers an original 8-second CISSP study recap video generator and a manual download button **even before OAuth or video.upload is configured**. Learners can download a WebM/MP4 recording (depending on supported browser codecs) and upload it in the TikTok app themselves. Automatic Draft Inbox transfer stays disabled unless Login Kit, user consent and the video.upload scope are configured. The browser-generated video feature requires MediaRecorder/canvas support and still needs interactive browser playback testing. Draft initialization is limited to one attempt per account every two minutes.
