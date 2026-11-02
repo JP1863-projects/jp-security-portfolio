@@ -43,7 +43,7 @@ The user's study history is not sold or shared by the application; progress resi
 
 1. Confirm `node --test tests/cissp-*.test.cjs` passes and the Worker builds with `node --check`.
 2. Deploy with Wrangler; verify the worker keeps the `CISSP_DB` binding.
-3. In a browser, open the live game and complete a five-question practice. Confirm the 568-variant bank and explanations.
+3. In a browser, open the live game and complete a five-question practice. Confirm the 728-variant bank and explanations.
 4. Open Sync; create an account and **save the displayed recovery code**.
 5. In a separate browser/device, restore using that code, confirm historical answers are present.
 6. Make different practice changes on both devices and confirm revision conflicts merge rather than overwrite progress.
@@ -53,6 +53,6 @@ The user's study history is not sold or shared by the application; progress resi
 ## Limits and disclosures
 - Fixed 125-question session is an **unofficial practice simulation**, not the ISC2 CAT algorithm.
 - The readiness percentage appears after 25 answered questions and is a learning heuristic, not an exam pass prediction.
-- The question bank contains 568 variants from 184 distinct scenario families, not 568 calibrated unique items.
+- The question bank contains 728 variants from 344 distinct scenario families, not 568 calibrated unique items.
 - Current exam outline effective April 15, 2024; updated outline effective April 15, 2027. See the official ISC2 exam outline.
 - The production connection from this GitHub account to Cloudflare Pages was previously rejected. Direct Worker deployments are used for this release. Git changes alone do not automatically update the live Worker.
