@@ -1,0 +1,25 @@
+name: Identity & Security Arcade Checks
+on:
+  push:
+    paths:
+      - 'identity-security-quiz.html'
+      - 'index.html'
+      - 'tests/identity-security-quiz.test.cjs'
+      - '.github/workflows/identity-security-quiz-checks.yml'
+  pull_request:
+    paths:
+      - 'identity-security-quiz.html'
+      - 'index.html'
+      - 'tests/identity-security-quiz.test.cjs'
+permissions:
+  contents: read
+jobs:
+  quiz-integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify 50 questions and simulated game flow
+        run: node --test tests/identity-security-quiz.test.cjs
