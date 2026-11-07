@@ -43,4 +43,4 @@ Regenerate the bank with `node scripts/build-ai-security-bank.cjs`; use `--check
 
 ## Thumbnail
 
-`assets/ai-security-study-thumb.webp` is original AI-generated artwork for the training menu card, optimized to 959 × 540 WebP. Concept: a crimson-and-gold cyber dragon guarding a luminous neural core in a golden shield on charcoal, with restrained cyan circuit accents. Text, official logos, and certification seals were excluded. The linked card provides the class title and question count as accessible HTML.
+`assets/ai-security-equation-thumb.webp` is original AI-generated artwork for the training menu card, optimized to 959 × 540 WebP. Concept: a crimson-and-gold cyber dragon guarding the glowing neural-network equation ŷ = σ(Wx + b) in a golden shield on charcoal, with restrained cyan circuit accents. The equation replaced the original brain emblem; official logos and certification seals were excluded. The linked card provides the class title and question count as accessible HTML.
