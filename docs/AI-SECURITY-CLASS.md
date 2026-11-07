@@ -48,3 +48,9 @@ Regenerate the bank with `node scripts/build-ai-security-bank.cjs`; use `--check
 ## Question-screen design
 
 Question rounds use a focused phone-sized panel on desktop and an edge-to-edge layout on narrow screens. The main course controls return through Class menu. Original generated artwork in `assets/ai-quiz-wallpaper.webp` supplies the crimson dragon, mathematical shield, and circuit detail; questions and answers remain accessible live text. Answer choices have letter badges and explicit feedback; the round progress indicator updates after selection. Long content stays inside a bounded scrolling panel with a persistent Next question action. Existing saved progress and lesson flow are preserved.
+
+### iPhone layout refinements
+
+The page opts into `viewport-fit=cover` and respects top, bottom, left, and right safe-area insets. Mobile quiz height follows the dynamic browser viewport, with a `vh` fallback. The quiz scrolls internally, the Class menu remains at the top, and Next stays above the bottom inset. Mobile answer text is 16px, answer targets are at least 52px high on short screens, and inputs use 16px text to avoid focus zoom. Artwork becomes shorter on compact viewports; landscape omits the banner to prioritize content.
+
+Browser checks at 402×740 and 440×830 CSS-pixel content areas confirmed no horizontal overflow, 16px answer text, answer target heights of at least 56px and 62px respectively, and a visible 52px Next button. These are browser layout checks, not physical iPhone/Safari hardware tests. Long explanations may require scrolling; text is never truncated to force a fit.
