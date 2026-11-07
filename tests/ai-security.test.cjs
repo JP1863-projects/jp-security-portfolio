@@ -3,7 +3,7 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const data=fs.readFileSync('ai-security-content.js','utf8'),script=fs.readFileSync('ai-security.js','utf8');
 function harness(saved,blocked=false){
  class E{constructor(tag){this.tagName=tag;this.children=[];this.dataset={};this.listeners={};this.textContent='';this.classList={add(){}};}append(...c){this.children.push(...c)}replaceChildren(...c){this.children=c}setAttribute(){}addEventListener(k,f){this.listeners[k]=f}focus(){}querySelector(tag){return this.children.find(c=>c.tagName===tag)}click(){if(!this.disabled)(this.onclick||this.listeners.click)?.()} }
- const nodes=new Map(),store={value:saved};const document={querySelector:s=>{if(!nodes.has(s))nodes.set(s,new E('div'));return nodes.get(s)},createElement:t=>new E(t)};
+ const nodes=new Map(),store={value:saved};const document={body:{dataset:{}},querySelector:s=>{if(!nodes.has(s))nodes.set(s,new E('div'));return nodes.get(s)},createElement:t=>new E(t)};
  const c=vm.createContext({window:{},document,localStorage:{getItem:()=>{if(blocked)throw Error();return store.value},setItem:(k,v)=>{if(blocked)throw Error();store.value=v}},confirm:()=>true});vm.runInContext(data,c);vm.runInContext(fs.readFileSync('ai-security-extra.js','utf8'),c);vm.runInContext(script,c);
  return {c,nodes,store,eval:s=>vm.runInContext(s,c)};
 }

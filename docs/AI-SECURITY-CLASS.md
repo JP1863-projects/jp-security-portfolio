@@ -44,3 +44,7 @@ Regenerate the bank with `node scripts/build-ai-security-bank.cjs`; use `--check
 ## Thumbnail
 
 `assets/ai-security-equation-thumb.webp` is original AI-generated artwork for the training menu card, optimized to 959 × 540 WebP. Concept: a crimson-and-gold cyber dragon guarding the glowing neural-network equation ŷ = σ(Wx + b) in a golden shield on charcoal, with restrained cyan circuit accents. The equation replaced the original brain emblem; official logos and certification seals were excluded. The linked card provides the class title and question count as accessible HTML.
+
+## Question-screen design
+
+Question rounds use a focused phone-sized panel on desktop and an edge-to-edge layout on narrow screens. The main course controls return through Class menu. Original generated artwork in `assets/ai-quiz-wallpaper.webp` supplies the crimson dragon, mathematical shield, and circuit detail; questions and answers remain accessible live text. Answer choices have letter badges and explicit feedback; the round progress indicator updates after selection. Long content stays inside a bounded scrolling panel with a persistent Next question action. Existing saved progress and lesson flow are preserved.
