@@ -4,29 +4,30 @@
 :root{font-family:system-ui,-apple-system,sans-serif;color:#f9f8ff;background:#101124;--accent:#25cbb4}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 80% 0%,#34315f 0,transparent 45%),#101124}main{max-width:850px;margin:auto;padding:28px 20px 70px}a{color:#b8e6ff}header{display:flex;justify-content:space-between;align-items:center;gap:12px}header a{font-weight:700;text-decoration:none}.hero{text-align:center;padding:70px 0 40px}.eyebrow{color:var(--accent);text-transform:uppercase;letter-spacing:.18em;font-size:.78rem;font-weight:800}h1{font-family:Georgia,serif;font-weight:500;font-size:clamp(2.7rem,8vw,5.4rem);line-height:1.08;letter-spacing:-.04em;margin:15px auto;max-width:780px}p{color:#c9c9dd;line-height:1.6}.panel{border:1px solid #ffffff25;background:#1d1e35;border-radius:24px;padding:clamp(20px,4vw,34px);box-shadow:0 20px 60px #0004}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}label{display:block;font-weight:700;font-size:.86rem;margin-bottom:7px}input,select,textarea{font:inherit;background:#101124;color:#fff;border:1px solid #ffffff55;border-radius:12px;width:100%;padding:13px}textarea{min-height:100px;resize:vertical}.wide{grid-column:1/-1}button,.button{font:inherit;border:0;border-radius:12px;background:var(--accent);color:#111025;padding:14px 19px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-block}button:hover,.button:hover{filter:brightness(1.13)}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #fff;outline-offset:3px}.results{margin-top:28px}.links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.linkcard{padding:18px;border:1px solid #ffffff30;border-radius:16px;background:#ffffff0a}.linkcard strong{display:block;margin-bottom:8px}.linkcard a{overflow-wrap:anywhere}.note{font-size:.85rem;color:#a9abc3}.status{min-height:1.4em}@media(max-width:560px){.grid,.links{grid-template-columns:1fr}.hero{padding:45px 0 20px}}
 </style></head><body><main><header><a href="/">← Security Innovation</a><span class="eyebrow">Investor Discovery</span></header>
 <section class="hero"><div class="eyebrow">Research • Match • Connect</div><h1>Find investors who match your next big idea.</h1><p>Explore relevant investor databases and funding networks. No invented investors or unverified compatibility scores.</p></section>
-<section class="panel" aria-labelledby="form-title"><h2 id="form-title">Build your investor search</h2><form id="finder" class="grid">
-<div><label for="sector">Industry</label><select id="sector"><option>Cybersecurity & AI Security</option><option>Cybersecurity & Identity</option><option>Gaming & Mobile Apps</option><option>EdTech</option><option>AI & Automation</option><option>Enterprise SaaS</option></select></div>
-<div><label for="stage">Funding stage</label><select id="stage"><option>Pre-seed</option><option>Seed</option><option>Series A</option><option>Bootstrapped / exploring</option></select></div>
-<div class="wide"><label for="pitch">Describe your startup (optional)</label><textarea id="pitch" maxlength="800" placeholder="Who is it for, what problem does it solve, and what traction do you have?"></textarea></div>
-<div class="wide"><button type="submit">Find research sources ↗</button></div></form><p class="note">Searches open external research sites. Your description is not sent to this website's server.</p></section>
+<section class="panel" aria-labelledby="form-title"><h2 id="form-title">Analyze a startup website</h2><p>Enter a public website URL to begin investor research. No signup required.</p><form id="finder" class="grid"><div class="wide"><label for="website">Startup website URL</label><input id="website" type="url" required inputmode="url" autocomplete="url" placeholder="https://example.com" value="" maxlength="300"></div><div class="wide"><button type="submit">Research this website ↗</button></div></form><details style="margin-top:18px"><summary style="cursor:pointer;font-weight:700">Optional research filters</summary><div class="grid" style="margin-top:15px"><div><label for="sector">Industry</label><select id="sector"><option value="">Detect from website</option><option>Gaming & Mobile Apps</option><option>Cybersecurity & Identity</option><option>EdTech</option><option>AI & Automation</option><option>Enterprise SaaS</option></select></div><div><label for="stage">Funding stage</label><select id="stage"><option value="">Unknown</option><option>Pre-seed</option><option>Seed</option><option>Series A</option><option>Bootstrapped / exploring</option></select></div></div></details><p class="note">This version opens public search results for the supplied domain. It does not automatically crawl the website, verify investor matches, or collect private business data.</p><p id="form-error" class="status" role="alert"></p></section>
 <section class="results" id="results" hidden aria-live="polite"><h2>Research starting points</h2><p id="summary"></p><div class="links" id="links"></div><p class="note">Always confirm investment thesis, active status, check size and contact details from primary sources before outreach. These links are discovery tools, not verified investor matches.</p></section>
 <section class="panel" style="margin-top:28px"><h2>Private investor workspace</h2><p>A secure owner-only CRM requires authenticated access and server-side authorization. Until that is configured, no investor notes, personal contacts or private deal data are collected or stored here.</p><a href="/" class="button">Back to Security Innovation</a></section>
 </main><script>
 const form=document.getElementById('finder');
 form.addEventListener('submit',event=>{
  event.preventDefault();
+ const error=document.getElementById('form-error');error.textContent='';
+ let parsed;try{parsed=new URL(document.getElementById('website').value.trim())}catch{error.textContent='Enter a valid website URL, including https://';return}
+ if(!['http:','https:'].includes(parsed.protocol)||parsed.username||parsed.password||!parsed.hostname.includes('.')||parsed.hostname==='localhost'){error.textContent='Enter a public HTTP(S) website URL.';return}
+ const host=parsed.hostname.toLowerCase();
  const sector=document.getElementById('sector').value;
  const stage=document.getElementById('stage').value;
- const query=sector+' '+stage+' angel investors startups';
+ const q=(s)=>'https://www.google.com/search?q='+encodeURIComponent(s);
  const sources=[
-  ['OpenVC investor directory','https://www.openvc.app/'],
-  ['Angel Capital Association','https://www.angelcapitalassociation.org/'],
-  ['Crunchbase investor research','https://www.crunchbase.com/'],
-  ['Search investor theses','https://www.google.com/search?q='+encodeURIComponent(query+' investment thesis')]
+ ['Explore the company website',parsed.origin],
+ ['Research products and business model',q('site:'+host+' products services customers')],
+ ['Find relevant angel investors',q(host+' '+sector+' '+stage+' angel investors startup funding')],
+ ['Search investment theses',q((sector||host)+' '+(stage||'early stage')+' venture capital investment thesis')],
+ ['Find company funding news',q(host+' funding investors press')]
  ];
  const list=document.getElementById('links');list.replaceChildren();
- for(const [name,url] of sources){const card=document.createElement('div');card.className='linkcard';const title=document.createElement('strong');title.textContent=name;const link=document.createElement('a');link.href=url;link.target='_blank';link.rel='noopener noreferrer';link.textContent='Open research source ↗';card.append(title,link);list.append(card)}
- document.getElementById('summary').textContent='Explore '+sector+' investors at the '+stage+' stage.';
+ for(const [name,url] of sources){const card=document.createElement('div');card.className='linkcard';const title=document.createElement('strong');title.textContent=name;const link=document.createElement('a');link.href=url;link.target='_blank';link.rel='noopener noreferrer';link.textContent='Open research ↗';card.append(title,link);list.append(card)}
+ document.getElementById('summary').textContent='Research starting points for '+host+'. Industry and funding stage must be confirmed from trustworthy sources.';
  document.getElementById('results').hidden=false;
  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
 });
