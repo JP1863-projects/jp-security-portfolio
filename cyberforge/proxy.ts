@@ -1,4 +1,4 @@
-// Guest portfolio demo does not require Clerk middleware.
-// Full account authentication will be restored in a separate release.
-export default function proxy(){return;}
-export const config={matcher:[]};
+import {NextResponse} from 'next/server';
+// No authentication middleware for the guest demo.
+export default function proxy(){return NextResponse.next();}
+export const config={matcher:['/__cyberforge_noop__']};
