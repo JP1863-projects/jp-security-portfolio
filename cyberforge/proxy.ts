@@ -1,3 +1,4 @@
-import { clerkMiddleware } from '@clerk/nextjs/server';
-export default clerkMiddleware();
-export const config = { matcher: ['/((?!_next|.*\\..*).*)', '/(api|trpc)(.*)'] };
+// Guest portfolio demo does not require Clerk middleware.
+// Full account authentication will be restored in a separate release.
+export default function proxy(){return;}
+export const config={matcher:[]};
