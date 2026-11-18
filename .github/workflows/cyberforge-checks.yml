@@ -55,5 +55,17 @@ jobs:
       - run: npm ci
       - name: Audit production dependency surface
         run: npm audit --omit=dev --audit-level=high
-      - name: Report build-tool advisories (upstream picomatch has no patched release)
-        run: npm audit --audit-level=high --json > /tmp/cyberforge-full-audit.json || true
+      - name: Capture complete dependency audit
+        if: always()
+        run: |
+          npm audit --audit-level=high --json > /tmp/cyberforge-full-audit.json || true
+          npm audit --omit=dev --audit-level=high --json > /tmp/cyberforge-production-audit.json || true
+      - name: Upload security audit evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cyberforge-security-audit
+          path: |
+            /tmp/cyberforge-full-audit.json
+            /tmp/cyberforge-production-audit.json
+          retention-days: 30
