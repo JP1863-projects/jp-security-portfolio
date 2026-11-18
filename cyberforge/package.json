@@ -50,5 +50,10 @@
     "prisma": "^6.19.3",
     "@types/pg": "^8.15.5"
   },
-  "type": "module"
+  "type": "module",
+  "overrides": {
+    "deepmerge-ts": "^8.0.0",
+    "fflate": "^0.8.2",
+    "picomatch": "^4.0.4"
+  }
 }
