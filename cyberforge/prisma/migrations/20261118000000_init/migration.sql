@@ -1,0 +1,15 @@
+CREATE EXTENSION IF NOT EXISTS vector;
+CREATE TABLE "Learner" ("id" TEXT PRIMARY KEY, "clerkId" TEXT NOT NULL UNIQUE, "displayName" TEXT NOT NULL DEFAULT 'Learner', "xp" INTEGER NOT NULL DEFAULT 0, "streak" INTEGER NOT NULL DEFAULT 0, "lastActive" TIMESTAMP(3), "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE INDEX "Learner_xp_idx" ON "Learner"("xp");
+CREATE TABLE "Progress" ("id" TEXT PRIMARY KEY, "learnerId" TEXT NOT NULL REFERENCES "Learner"("id") ON DELETE CASCADE, "moduleSlug" TEXT NOT NULL, "completedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP, UNIQUE("learnerId","moduleSlug"));
+CREATE TABLE "Attempt" ("id" TEXT PRIMARY KEY, "learnerId" TEXT NOT NULL REFERENCES "Learner"("id") ON DELETE CASCADE, "moduleSlug" TEXT NOT NULL, "score" INTEGER NOT NULL, "total" INTEGER NOT NULL, "answers" JSONB NOT NULL, "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE INDEX "Attempt_learnerId_moduleSlug_idx" ON "Attempt"("learnerId","moduleSlug");
+CREATE TABLE "CardReview" ("id" TEXT PRIMARY KEY, "learnerId" TEXT NOT NULL REFERENCES "Learner"("id") ON DELETE CASCADE, "cardId" TEXT NOT NULL, "intervalDays" INTEGER NOT NULL DEFAULT 0, "ease" DOUBLE PRECISION NOT NULL DEFAULT 2.5, "dueAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP, "bookmarked" BOOLEAN NOT NULL DEFAULT false, "reviewedAt" TIMESTAMP(3), UNIQUE("learnerId","cardId"));
+CREATE INDEX "CardReview_learnerId_dueAt_idx" ON "CardReview"("learnerId","dueAt");
+CREATE TABLE "LabRun" ("id" TEXT PRIMARY KEY, "learnerId" TEXT NOT NULL REFERENCES "Learner"("id") ON DELETE CASCADE, "labSlug" TEXT NOT NULL, "passed" BOOLEAN NOT NULL, "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE INDEX "LabRun_learnerId_labSlug_idx" ON "LabRun"("learnerId","labSlug");
+CREATE TABLE "Achievement" ("id" TEXT PRIMARY KEY, "learnerId" TEXT NOT NULL REFERENCES "Learner"("id") ON DELETE CASCADE, "key" TEXT NOT NULL, "earnedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP, UNIQUE("learnerId","key"));
+CREATE TABLE "CoachUsage" ("id" TEXT PRIMARY KEY, "learnerId" TEXT NOT NULL REFERENCES "Learner"("id") ON DELETE CASCADE, "day" DATE NOT NULL, "calls" INTEGER NOT NULL DEFAULT 0, UNIQUE("learnerId","day"));
+CREATE TABLE "KnowledgeChunk" ("id" TEXT PRIMARY KEY, "moduleSlug" TEXT NOT NULL, "source" TEXT NOT NULL, "body" TEXT NOT NULL, "embedding" vector(1536) NOT NULL);
+CREATE INDEX "KnowledgeChunk_moduleSlug_idx" ON "KnowledgeChunk"("moduleSlug");
+CREATE INDEX "KnowledgeChunk_embedding_hnsw_idx" ON "KnowledgeChunk" USING hnsw ("embedding" vector_cosine_ops);

@@ -1,0 +1,1 @@
+import { SignUp } from '@clerk/nextjs';export default function Page(){return process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY?<div className="flex justify-center px-5 py-16"><SignUp/></div>:<p className="mx-auto max-w-xl px-5 py-20">Account sign-in is being configured.</p>}

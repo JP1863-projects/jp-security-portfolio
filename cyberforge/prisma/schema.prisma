@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+  engineType = "client"
+}
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+model Learner {
+  id String @id @default(cuid())
+  clerkId String @unique
+  displayName String @default("Learner")
+  xp Int @default(0)
+  streak Int @default(0)
+  lastActive DateTime?
+  createdAt DateTime @default(now())
+  progress Progress[]
+  attempts Attempt[]
+  cards CardReview[]
+  achievements Achievement[]
+  labRuns LabRun[]
+  coachUsage CoachUsage[]
+  @@index([xp])
+}
+model Progress {
+  id String @id @default(cuid())
+  learnerId String
+  moduleSlug String
+  completedAt DateTime @default(now())
+  learner Learner @relation(fields:[learnerId],references:[id],onDelete:Cascade)
+  @@unique([learnerId,moduleSlug])
+}
+model Attempt {
+  id String @id @default(cuid())
+  learnerId String
+  moduleSlug String
+  score Int
+  total Int
+  answers Json
+  createdAt DateTime @default(now())
+  learner Learner @relation(fields:[learnerId],references:[id],onDelete:Cascade)
+  @@index([learnerId,moduleSlug])
+}
+model CardReview {
+  id String @id @default(cuid())
+  learnerId String
+  cardId String
+  intervalDays Int @default(0)
+  ease Float @default(2.5)
+  dueAt DateTime @default(now())
+  bookmarked Boolean @default(false)
+  reviewedAt DateTime?
+  learner Learner @relation(fields:[learnerId],references:[id],onDelete:Cascade)
+  @@unique([learnerId,cardId])
+  @@index([learnerId,dueAt])
+}
+model LabRun {
+  id String @id @default(cuid())
+  learnerId String
+  labSlug String
+  passed Boolean
+  createdAt DateTime @default(now())
+  learner Learner @relation(fields:[learnerId],references:[id],onDelete:Cascade)
+  @@index([learnerId,labSlug])
+}
+model Achievement {
+  id String @id @default(cuid())
+  learnerId String
+  key String
+  earnedAt DateTime @default(now())
+  learner Learner @relation(fields:[learnerId],references:[id],onDelete:Cascade)
+  @@unique([learnerId,key])
+}
+model CoachUsage {
+  id String @id @default(cuid())
+  learnerId String
+  day DateTime @db.Date
+  calls Int @default(0)
+  learner Learner @relation(fields:[learnerId],references:[id],onDelete:Cascade)
+  @@unique([learnerId,day])
+}

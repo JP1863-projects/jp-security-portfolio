@@ -1,0 +1,29 @@
+name: CyberForge checks
+on:
+  pull_request:
+    paths:
+      - 'cyberforge/**'
+      - '.github/workflows/cyberforge-checks.yml'
+  push:
+    paths:
+      - 'cyberforge/**'
+      - '.github/workflows/cyberforge-checks.yml'
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cyberforge
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: cyberforge/package-lock.json
+      - run: npm ci
+      - run: npx prisma generate
+      - run: npm test
+      - run: npm run typecheck
+      - run: npm run build
+      - run: npm run build:vinext
