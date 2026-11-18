@@ -1,0 +1,2 @@
+import {Card} from './ui/card';
+export function Coach({moduleSlug}:{moduleSlug:string}){void moduleSlug;return <Card><span className="eyebrow">AI Coach · Coming later</span><h2 className="mt-2 text-lg font-bold">Guided coaching</h2><p className="muted mt-3 text-sm">AI coaching is disabled in this guest portfolio demo. Courses, labs, quizzes, and flashcards are available without an account.</p></Card>}

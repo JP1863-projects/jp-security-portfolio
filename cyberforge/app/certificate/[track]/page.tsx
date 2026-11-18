@@ -1,0 +1,3 @@
+import Link from 'next/link';import {notFound} from 'next/navigation';
+const tracks=['core','engineering','ai-security'];
+export default async function Certificate({params}:{params:Promise<{track:string}>}){const {track}=await params;if(!tracks.includes(track))notFound();return <section className="mx-auto max-w-3xl px-5 py-20"><h1 className="text-3xl font-bold">Certificates coming later</h1><p className="muted mt-4">The guest portfolio demo tracks practice progress locally. Verified completion certificates require the future account-enabled platform.</p><Link className="mt-5 inline-block text-amber-300" href="/dashboard">View guest progress →</Link></section>}

@@ -1,0 +1,2 @@
+import {modules} from '@/lib/content';import {FlashcardDeck} from '@/components/flashcard-deck';
+export default function Flashcards(){return <section className="mx-auto max-w-5xl px-5 py-14"><p className="eyebrow">Guest recall practice</p><h1 className="mt-3 text-4xl font-black">Flashcards</h1><p className="muted mt-3">Reveal answers and rate recall. Reviews are saved only in this browser, not synced across devices.</p><FlashcardDeck cards={modules.map(m=>({id:m.slug,track:m.track,...m.flashcard}))} states={{}}/></section>}

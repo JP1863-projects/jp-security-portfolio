@@ -1,0 +1,2 @@
+import Link from 'next/link';import {Card} from '@/components/ui/card';
+export default function Leaderboard(){return <section className="mx-auto max-w-4xl px-5 py-14"><p className="eyebrow">Portfolio demo</p><h1 className="mt-3 text-4xl font-black">Community leaderboard</h1><Card className="mt-8"><p className="muted">Shared rankings are unavailable in guest mode. Your progress is private to this browser.</p><Link className="mt-5 inline-block text-amber-300" href="/dashboard">View your guest dashboard →</Link></Card></section>}

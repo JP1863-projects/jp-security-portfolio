@@ -1,0 +1,1 @@
+import {NextResponse} from 'next/server';export async function POST(){return NextResponse.json({error:'Flashcard reviews are stored in this browser during guest mode.'},{status:503});}
