@@ -12,10 +12,6 @@ export default defineConfig({
     },
     env: {
       ASSETS: bindings.assets(),
-      DATABASE_URL: bindings.secret(),
-      CLERK_SECRET_KEY: bindings.secret(),
-      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: bindings.secret(),
-      OPENAI_API_KEY: bindings.secret(),
     },
   }),
 });
