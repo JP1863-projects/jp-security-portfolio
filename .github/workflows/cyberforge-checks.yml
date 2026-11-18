@@ -27,6 +27,19 @@ jobs:
       - run: npm run typecheck
       - run: npm run build
       - run: npm run build:vinext
+      - name: Guest demo HTTP smoke test
+        run: |
+          npm run start:vinext -- --host 127.0.0.1 > /tmp/cyberforge-preview.log 2>&1 &
+          preview_pid=$!
+          trap 'kill $preview_pid 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:4173/ -o /tmp/cyberforge-home.html; then break; fi
+            sleep 2
+          done
+          grep -q 'CyberForge' /tmp/cyberforge-home.html
+          for route in /dashboard /labs /flashcards /leaderboard /learn/security-architecture; do
+            curl --fail --silent --show-error "http://127.0.0.1:4173$route" -o /dev/null
+          done
   security-audit:
     runs-on: ubuntu-latest
     defaults:
